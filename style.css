@@ -1,0 +1,156 @@
+:root{
+    --neon-blue: #00f3ff;
+    --dark-bg: #1a1a2e;
+    --card-bg: #16213e;
+}
+body {
+    font-family: 'Segoe UI' , Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--dark-bg);
+    padding: 20px;
+    color: var(--neon-blue);
+    font-size: 2.5em;
+}
+.bags-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Thay đổi thành 3 cột */
+    gap: 20px; /* Khoảng cách giữa các túi */
+    width: 65vw;
+    height: 70vh;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,255,255,0.3);
+    padding: 40px;
+    margin: 20px auto;
+}
+
+.bag {
+    width: 230px;
+    height: 150px;
+    background: url('bag.png');
+    background-size: contain; /* Đảm bảo hình ảnh không bị cắt */
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.bag:hover {
+    transform: scale(1.05);
+}
+.bag.opened {
+    background: var(--card-bg);
+    width: 230px;
+    height: 150px;
+    border-radius: 10px;
+    cursor: not-allowed;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+.modal-content {
+    background: var(--card-bg);
+    border: 2px solid var(--neon-blue);
+    padding: 30px;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(0,243,255,0.3);
+}
+.question {
+    font-size: 1em;
+    margin-bottom: 25px;
+    color: white;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0,243,255,0.3);
+}
+.answers {
+    display: grid;
+    gap: 10px;
+}
+.answer-btn {
+    padding: 10px;
+    border: 1px solid var(--neon-blue);
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.5em;
+    text-align: center;
+}
+.answer-btn:hover {
+    background: rgba(0, 243, 255, 0.1);
+    transform: translateX(5px);
+}
+.answer-btn.wrong {
+    background-color: rgba(255, 68, 68, 0.2);
+    border-color: #ff4444;
+}
+.answer-btn.correct {
+    background-color: rgba(76, 175, 80, 0.2);
+    border-color: #4CAF50;
+}
+.final-bag {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
+
+.final-bag.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.big-bag {
+    width: 400px;
+    height: 260px;
+    background: url('bag.png');
+    background-size: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: float 2s infinite ease-in-out;
+}
+
+.big-bag:hover {
+    transform: scale(1.1);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.hidden {
+    display: none;
+}

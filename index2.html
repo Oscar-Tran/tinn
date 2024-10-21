@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0a2e;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Background hexagon pattern */
+        .hex-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+            background: 
+                linear-gradient(60deg, #1a1a3a 25%, transparent 25%) 0 0,
+                linear-gradient(120deg, #1a1a3a 25%, transparent 25%) 0 0,
+                linear-gradient(180deg, #1a1a3a 25%, transparent 25%) 0 0,
+                linear-gradient(300deg, #1a1a3a 25%, transparent 25%) 0 0,
+                linear-gradient(360deg, #1a1a3a 25%, transparent 25%) 0 0;
+            background-size: 20px 35px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0;
+            animation: hexMove 40s linear infinite;
+        }
+
+        /* Floating cyber cubes */
+        .cyber-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            transform-style: preserve-3d;
+            animation: cubeSpin 20s linear infinite;
+        }
+
+        .cyber-cube div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .cube1 { left: 15%; top: 20%; }
+        .cube2 { right: 15%; bottom: 20%; }
+        .cube3 { left: 25%; bottom: 15%; }
+        .cube4 { right: 25%; top: 15%; }
+
+        /* DNA Helix */
+        .dna-container {
+            position: absolute;
+            left: 5%;
+            height: 100%;
+            width: 50px;
+            animation: dnaRotate 10s linear infinite;
+        }
+
+        .dna-strand {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: rgba(0, 255, 255, 0.5);
+            transform-origin: 50% 0;
+        }
+
+        /* Main container with enhanced effects */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 80%;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2),
+                        0 0 40px rgba(0, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            animation: containerFloat 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        /* Holographic display elements */
+        .holo-element {
+            position: absolute;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: holoSpin 10s linear infinite;
+        }
+
+        .holo1 {
+            width: 200px;
+            height: 200px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .holo2 {
+            width: 300px;
+            height: 300px;
+            bottom: -150px;
+            right: -150px;
+        }
+
+        /* Content styling */
+        .content {
+            color: #fff;
+            text-align: center;
+            font-size: 0.9em;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            position: relative;
+        }
+
+        /* Glowing text effect */
+        h1 {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glowText 2s ease-in-out infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 5s infinite;
+        }
+
+        /* Circuit lines */
+        .circuit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+
+        .circuit::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 50%, rgba(0, 255, 255, 0.5) 50%),
+                linear-gradient(0deg, transparent 50%, rgba(0, 255, 255, 0.5) 50%);
+            background-size: 30px 30px;
+            animation: circuitMove 20s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-20px) rotateX(-5deg); }
+        }
+
+        @keyframes cubeSpin {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes glowText {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.8); }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10px, -10px); }
+        }
+
+        @keyframes hexMove {
+            0% { background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0; }
+            100% { background-position: 1000px 0, 1000px 0, 1040px 70px, 1040px 70px, 1000px 0; }
+        }
+
+        @keyframes holoSpin {
+            0% { transform: rotate(0deg); border-color: rgba(0, 255, 255, 0.3); }
+            50% { border-color: rgba(0, 255, 255, 0.7); }
+            100% { transform: rotate(360deg); border-color: rgba(0, 255, 255, 0.3); }
+        }
+
+        /* Thêm hiệu ứng hover nâng cao */
+        .container:hover {
+            transform: scale(1.02) rotateX(10deg);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.4),
+                       0 0 100px rgba(0, 255, 255, 0.2);
+        }
+
+        /* Energy bars */
+        .energy-bar {
+            position: absolute;
+            width: 3px;
+            height: 100px;
+            background: linear-gradient(to top, transparent, #00ffff, transparent);
+            animation: energyPulse 2s ease-in-out infinite;
+        }
+
+        .energy-left { left: -50px; }
+        .energy-right { right: -50px; }
+
+        @keyframes energyPulse {
+            0%, 100% { transform: scaleY(1); opacity: 0.5; }
+            50% { transform: scaleY(1.2); opacity: 1; }
+        }
+
+        /* Digital rain effect */
+        .digital-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .rain-column {
+            position: absolute;
+            top: -100px;
+            font-family: monospace;
+            color: #0f0;
+            font-size: 20px;
+            animation: digitalRain 5s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes digitalRain {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hex-background"></div>
+    <div class="digital-rain"></div>
+    
+    <!-- Cyber cubes -->
+    <div class="cyber-cube cube1">
+        <div style="transform: rotateX(0deg) translateZ(30px)"></div>
+        <div style="transform: rotateX(180deg) translateZ(30px)"></div>
+        <div style="transform: rotateY(90deg) translateZ(30px)"></div>
+        <div style="transform: rotateY(-90deg) translateZ(30px)"></div>
+        <div style="transform: rotateX(90deg) translateZ(30px)"></div>
+        <div style="transform: rotateX(-90deg) translateZ(30px)"></div>
+    </div>
+    <div class="cyber-cube cube2">
+        <div style="transform: rotateX(0deg) translateZ(30px)"></div>
+        <div style="transform: rotateX(180deg) translateZ(30px)"></div>
+        <div style="transform: rotateY(90deg) translateZ(30px)"></div>
+        <div style="transform: rotateY(-90deg) translateZ(30px)"></div>
+        <div style="transform: rotateX(90deg) translateZ(30px)"></div>
+        <div style="transform: rotateX(-90deg) translateZ(30px)"></div>
+    </div>
+
+    <div class="container">
+        <div class="energy-bar energy-left"></div>
+        <div class="energy-bar energy-right"></div>
+        <div class="circuit"></div>
+        <div class="holo-element holo1"></div>
+        <div class="holo-element holo2"></div>
+        <div class="content">
+            <h1>Thank you</h1>
+        </div>
+        <div class="particles">
+            <div class="particle" style="left:10%; top:20%"></div>
+            <div class="particle" style="left:30%; top:50%"></div>
+            <div class="particle" style="left:70%; top:30%"></div>
+            <div class="particle" style="right:20%; bottom:40%"></div>
+        </div>
+    </div>
+
+    <script>
+        // Tạo hiệu ứng mưa số
+        function createDigitalRain() {
+            const container = document.querySelector('.digital-rain');
+            const characters = '01';
+            const columns = Math.floor(window.innerWidth / 20);
+
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'rain-column';
+                column.style.left = i * 20 + 'px';
+                column.style.animationDelay = Math.random() * 5 + 's';
+                
+                let rainString = '';
+                for (let j = 0; j < 20; j++) {
+                    rainString += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+                }
+                column.innerHTML = rainString;
+                container.appendChild(column);
+            }
+        }
+
+        // Tạo hiệu ứng DNA
+        function createDNA() {
+            const container = document.createElement('div');
+            container.className = 'dna-container';
+            document.body.appendChild(container);
+
+            for (let i = 0; i < 20; i++) {
+                const strand = document.createElement('div');
+                strand.className = 'dna-strand';
+                strand.style.top = i * 30 + 'px';
+                strand.style.transform = `rotate(${i * 20}deg)`;
+                container.appendChild(strand);
+            }
+        }
+
+        createDigitalRain();
+        createDNA();
+    </script>
+</body>
+</html>

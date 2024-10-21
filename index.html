@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trò chơi Túi Mù</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Thêm audio elements -->
+    <audio id="bgMusic" loop>
+        <source src="background-music.mp3" type="audio/mp3">
+    </audio>
+    <audio id="questionMusic">
+        <source src="question-music.mp3" type="audio/mp3">
+    </audio>
+    <audio id="correctSound">
+        <source src="correct.mp3" type="audio/mp3">
+    </audio>
+    <audio id="wrongSound">
+        <source src="wrong.mp3" type="audio/mp3">
+    </audio>
+
+    <h1>Trò chơi Túi Mù</h1>
+    <div class="bags-container">
+        <!-- 12 túi sẽ được tạo bằng JavaScript -->
+    </div>
+    
+    <!-- Thêm túi lớn cuối cùng (mặc định ẩn) -->
+    <div id="finalBag" class="final-bag hidden">
+        <a href="index2.html">
+            <div class="big-bag"></div>
+        </a>
+    </div>
+
+    <div class="modal" id="questionModal">
+        <div class="modal-content">
+            <div class="question" id="questionText"></div>
+            <div class="answers" id="answersContainer"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
